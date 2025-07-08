@@ -1,0 +1,24 @@
+{
+  "name": "lottery-web",
+  "version": "1.0.0",
+  "description": "双色球中奖查询前端应用",
+  "main": "app.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "dev": "tsc",
+    "clean": "rm -f *.js *.js.map",
+    "rebuild": "npm run clean && npm run build"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "keywords": [
+    "lottery",
+    "双色球",
+    "typescript",
+    "h5"
+  ],
+  "author": "",
+  "license": "MIT"
+}
