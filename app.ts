@@ -474,9 +474,35 @@ class LotteryApp {
         const latestDrawSection = document.getElementById('latestDrawSection');
         if (!latestDrawSection) return;
 
-        // 格式化日期
+        // 格式化日期 - 改进 Safari 兼容性
         const formatDate = (dateStr: string) => {
-            const date = new Date(dateStr);
+            // 处理常见的日期格式
+            let date: Date;
+            
+            // 如果是 ISO 格式 (YYYY-MM-DD)
+            if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+                date = new Date(dateStr + 'T00:00:00');
+            }
+            // 如果是其他格式，尝试直接解析
+            else {
+                date = new Date(dateStr);
+            }
+            
+            // 检查日期是否有效
+            if (isNaN(date.getTime())) {
+                // 如果解析失败，尝试手动解析常见格式
+                const parts = dateStr.split(/[-\/\s]/);
+                if (parts.length >= 3) {
+                    const year = parseInt(parts[0]);
+                    const month = parseInt(parts[1]) - 1; // 月份从0开始
+                    const day = parseInt(parts[2]);
+                    date = new Date(year, month, day);
+                } else {
+                    // 如果所有解析都失败，返回原始字符串
+                    return dateStr;
+                }
+            }
+            
             return date.toLocaleDateString('zh-CN', {
                 year: 'numeric',
                 month: 'long',
